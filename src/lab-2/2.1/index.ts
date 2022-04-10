@@ -77,7 +77,7 @@ function main(): void {
     const typeOfSort = 'ASC'
 
     const readLineInterface: Interface = createInterface({input, output})
-    readLineInterface.question('Hi: \n', (answer: string) => {
+    readLineInterface.question('Enter array of number for multiple: \n', (answer: string) => {
         const arrayOfString = stringToArray(answer, separator)
         const arrayOfNumber = arrayOfStringToArrayOfNumber(arrayOfString)
         const multipliedArray = multipleElementsOfArrayToMin(arrayOfNumber)
