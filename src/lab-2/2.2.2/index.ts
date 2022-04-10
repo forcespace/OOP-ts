@@ -18,8 +18,8 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-function trimAroundString(value: String): string {
-    return value.trim()
+function trimString(value: String): string {
+    return value.replace(/\s+/g, ' ').trim()
 }
 
 function main(): void {
@@ -28,7 +28,7 @@ function main(): void {
         if (answer === '') {
             printErrorsAndExit(ERRORS.EMPTY_INPUT)
         }
-        const result = trimAroundString(answer)
+        const result = trimString(answer)
         console.log(result)
         readLineInterface.close()
     })
