@@ -9,8 +9,12 @@ type ProgramError = {
 const ERRORS = {
     RANGE_ERROR: {
         code: 1,
-        message: 'Value very big'
-    }
+        message: 'Error. Value very big.'
+    },
+    EMPTY_INPUT: {
+        code: 1,
+        message: 'Error. Empty input.'
+    },
 }
 
 function printErrorsAndExit(error: ProgramError) {
@@ -22,6 +26,8 @@ function stringToArray(value: string, separator: string = ' '): Array<string | n
     let result: Array<string | never> = []
     if (value !== '') {
         result = value.split(separator)
+    } else {
+        printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
     return result
 }
