@@ -1,0 +1,5 @@
+# Custom
+/.idea
+/cmake-build-debug
+.gitattributes
+.DS_Store
