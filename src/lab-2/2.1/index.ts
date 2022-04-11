@@ -14,6 +14,10 @@ const ERRORS = {
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
+    },
+    INVALID_INPUT: {
+        code: 1,
+        message: 'Error. Invalid character in input.'
     }
 }
 
@@ -23,7 +27,7 @@ function printErrorsAndExit(error: ProgramError) {
 }
 
 function stringToArray(value: string, separator: string): Array<string> {
-    let result: Array<string | never> = []
+    let result: Array<string> = []
     if (value !== '') {
         result = value.split(separator)
     } else {
@@ -36,21 +40,17 @@ function isValidNumber(value: number): boolean {
     return value < Number.MAX_SAFE_INTEGER && !isNaN(value)
 }
 
+function isValidNumber2(value: number): number {
+    if (value > Number.MAX_SAFE_INTEGER) {
+        printErrorsAndExit(ERRORS.RANGE_ERROR)
+    } else if (isNaN(value)) {
+        printErrorsAndExit(ERRORS.INVALID_INPUT)
+    }
+    return value
+}
+
 function arrayOfStringToArrayOfNumber(values: Array<string>): Array<number> {
     return values.map((value: string) => parseFloat(value))
-
-    // const result: Array<number | never> = []
-    //
-    // values.forEach(value => {
-    //     const element = parseFloat(value)
-    //     if (isValidNumber(element)) {
-    //         result.push(element)
-    //     } else {
-    //         printErrorsAndExit(ERRORS.RANGE_ERROR)
-    //     }
-    // })
-    //
-    // return result
 }
 
 function getMinElementOfArray(array: Array<number>): number {
@@ -60,25 +60,16 @@ function getMinElementOfArray(array: Array<number>): number {
 function multipleElementsOfArrayToMin(array: Array<number>): Array<number> {
     const minElement = getMinElementOfArray(array)
 
-    return array.map((value: number) => (value * minElement))
-
-    // for (let i = 0; i < array.length; i++) {
-    //     const result = array[i] * minElement
-    //     if (isValidNumber(result)) {
-    //         array[i] = result
-    //     } else {
-    //         printErrorsAndExit(ERRORS.RANGE_ERROR)
-    //     }
-    // }
-    //
-    // return array
+    return array.map((value: number) => (
+        value * minElement
+    ))
 }
 
 function sortArray(array: Array<number>, order: 'ASC' | 'DESC' = 'ASC'): Array<number> {
     return array.sort((a, b) => order === 'ASC' ? a - b : b - a)
 }
 
-function printResultArray(result: number[]): void {
+function printArray(result: number[]): void {
     console.log(result)
 }
 
@@ -92,10 +83,7 @@ function main(): void {
         const arrayOfNumber = arrayOfStringToArrayOfNumber(arrayOfString)
         const multipliedArray = multipleElementsOfArrayToMin(arrayOfNumber)
         const sortedArray = sortArray(multipliedArray, typeOfSort)
-
-        printResultArray(sortedArray)
-
-        // console.log(sortedArray)
+        printArray(sortedArray)
         readLineInterface.close()
     })
 }
