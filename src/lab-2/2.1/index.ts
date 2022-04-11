@@ -22,7 +22,7 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-function stringToArray(value: string, separator: string): Array<string> {
+export function stringToArray(value: string, separator: string): Array<string> {
     let result: Array<string> = []
     if (value !== '') {
         result = value.split(separator)
@@ -32,15 +32,15 @@ function stringToArray(value: string, separator: string): Array<string> {
     return result
 }
 
-function arrayOfStringToArrayOfNumber(values: Array<string>): Array<number> {
+export function arrayOfStringToArrayOfNumber(values: Array<string>): Array<number> {
     return values.map((value: string) => parseFloat(value))
 }
 
-function getMinElementOfArray(array: Array<number>): number {
+export function getMinElementOfArray(array: Array<number>): number {
     return Math.min(...array)
 }
 
-function multipleElementsOfArrayToMin(array: Array<number>): Array<number> {
+export function multipleElementsOfArrayToMin(array: Array<number>): Array<number> {
     const minElement = getMinElementOfArray(array)
 
     return array.map((value: number) => (
@@ -48,7 +48,7 @@ function multipleElementsOfArrayToMin(array: Array<number>): Array<number> {
     ))
 }
 
-function sortArray(array: Array<number>, order: 'ASC' | 'DESC' = 'ASC'): Array<number> {
+export function sortArray(array: Array<number>, order: 'ASC' | 'DESC' = 'ASC'): Array<number> {
     return array.sort((a, b) => order === 'ASC' ? a - b : b - a)
 }
 
@@ -72,7 +72,3 @@ function main(): void {
 }
 
 main()
-
-export {
-    stringToArray
-}
