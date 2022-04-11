@@ -14,7 +14,7 @@ const ERRORS = {
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
-    },
+    }
 }
 
 function printErrorsAndExit(error: ProgramError) {
@@ -22,7 +22,7 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-function stringToArray(value: string, separator: string = ' '): Array<string | never> {
+function stringToArray(value: string, separator: string): Array<string> {
     let result: Array<string | never> = []
     if (value !== '') {
         result = value.split(separator)
@@ -78,6 +78,10 @@ function sortArray(array: Array<number>, order: 'ASC' | 'DESC' = 'ASC'): Array<n
     return array.sort((a, b) => order === 'ASC' ? a - b : b - a)
 }
 
+function printResultArray(result: number[]): void {
+    console.log(result)
+}
+
 function main(): void {
     const separator = ' '
     const typeOfSort = 'ASC'
@@ -88,9 +92,16 @@ function main(): void {
         const arrayOfNumber = arrayOfStringToArrayOfNumber(arrayOfString)
         const multipliedArray = multipleElementsOfArrayToMin(arrayOfNumber)
         const sortedArray = sortArray(multipliedArray, typeOfSort)
-        console.log(sortedArray)
+
+        printResultArray(sortedArray)
+
+        // console.log(sortedArray)
         readLineInterface.close()
     })
 }
 
 main()
+
+export {
+    stringToArray
+}

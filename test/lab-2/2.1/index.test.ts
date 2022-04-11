@@ -1,13 +1,12 @@
 import {expect} from 'chai'
 import {describe} from 'mocha'
-import {parseArgs} from "../../../src/lab-2/2.1";
+import {stringToArray} from '../../../src/lab-2/2.1'
 
-describe('2.1', () => {
-    describe("parseArgs", () => {
-        it('should return parsed arguments', () => {
-            expect(parseArgs(["", "", "test"])).equals("test")
-        });
-
-
+describe('Each element of the array must be multiplied by a similar element of the original array', () => {
+    it('The test should return an array of strings', () => {
+        expect(stringToArray('any text', ' ')).eql(['any', 'text'])
+    })
+    it('The test should return an array of strings', () => {
+        expect(stringToArray('any text', ' ')).eql(['any', 'text'])
     })
 })
