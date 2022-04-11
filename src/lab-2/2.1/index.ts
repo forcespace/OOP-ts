@@ -14,10 +14,6 @@ const ERRORS = {
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
-    },
-    INVALID_INPUT: {
-        code: 1,
-        message: 'Error. Invalid character in input.'
     }
 }
 
@@ -34,19 +30,6 @@ function stringToArray(value: string, separator: string): Array<string> {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
     return result
-}
-
-function isValidNumber(value: number): boolean {
-    return value < Number.MAX_SAFE_INTEGER && !isNaN(value)
-}
-
-function isValidNumber2(value: number): number {
-    if (value > Number.MAX_SAFE_INTEGER) {
-        printErrorsAndExit(ERRORS.RANGE_ERROR)
-    } else if (isNaN(value)) {
-        printErrorsAndExit(ERRORS.INVALID_INPUT)
-    }
-    return value
 }
 
 function arrayOfStringToArrayOfNumber(values: Array<string>): Array<number> {
