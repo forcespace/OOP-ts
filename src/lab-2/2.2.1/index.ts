@@ -29,12 +29,16 @@ export function checkFullnessInputString(line: string): string {
     return line
 }
 
+export function printLine(line: string): void {
+    console.log(line)
+}
+
 function main(): void {
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for trim: \n', (answer: string) => {
         const line = checkFullnessInputString(answer)
         const result = trimAroundString(line)
-        console.log(result)
+        printLine(result)
         readLineInterface.close()
     })
 }

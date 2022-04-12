@@ -47,16 +47,20 @@ function replaceInString(line: string, searchValue: string, replaceValue: string
     return line.replace(searchValue, replaceValue)
 }
 
-function main(arguments2: Array<string>): void {
+export function printLine(line: string): void {
+    console.log(line)
+}
+
+function main(argument: Array<string>): void {
+    const args = parseArgs(argument)
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for find and replace: \n', (answer: string) => {
-        const args = parseArgs(arguments2)
         const readLineInterface: Interface = createInterface({input, output})
         const findString = args[2]
         const replaceString = args[3]
         const line = checkFullnessInputString(answer)
         const result = replaceInString(line, findString, replaceString)
-        console.log(result)
+        printLine(result)
 
         readLineInterface.close()
     })
