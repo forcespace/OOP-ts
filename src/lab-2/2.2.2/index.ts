@@ -22,13 +22,18 @@ function trimString(value: String): string {
     return value.replace(/\s+/g, ' ').trim()
 }
 
+export function checkInputForNotEmpty(line: string): string {
+    if (line === '') {
+        printErrorsAndExit(ERRORS.EMPTY_INPUT)
+    }
+    return line
+}
+
 function main(): void {
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for trim: \n', (answer: string) => {
-        if (answer === '') {
-            printErrorsAndExit(ERRORS.EMPTY_INPUT)
-        }
-        const result = trimString(answer)
+        const line = checkInputForNotEmpty(answer)
+        const result = trimString(line)
         console.log(result)
         readLineInterface.close()
     })
