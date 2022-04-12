@@ -36,14 +36,14 @@ function parseArgs(args: Array<string>): Array<string> {
     return args
 }
 
-function checkFullnessInputString(line: string): string {
+export function checkFullnessInputString(line: string): string {
     if (line === '') {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
     return line
 }
 
-function replaceInString(line: string, searchValue: string, replaceValue: string): string {
+export function replaceInString(line: string, searchValue: string, replaceValue: string): string {
     return line.replace(searchValue, replaceValue)
 }
 
