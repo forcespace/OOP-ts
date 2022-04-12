@@ -36,19 +36,15 @@ function parseArgs(args: Array<string>): Array<string> {
     return args
 }
 
-// function getPositionInString(inputLine: string, searchLine: string): number {
-//     return inputLine.search(searchLine)
-// }
-
-function checkFullnessInputString(inputLine: string): string {
-    if (inputLine === '') {
+function checkFullnessInputString(line: string): string {
+    if (line === '') {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
-    return inputLine
+    return line
 }
 
-function replaceInString(inputLine: string, searchValue: string, replaceValue: string): string {
-    return inputLine.replace(searchValue, replaceValue)
+function replaceInString(line: string, searchValue: string, replaceValue: string): string {
+    return line.replace(searchValue, replaceValue)
 }
 
 function main(arguments2: Array<string>): void {

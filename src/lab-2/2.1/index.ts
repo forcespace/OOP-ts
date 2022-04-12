@@ -22,10 +22,10 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-export function stringToArray(value: string, separator: string): Array<string> {
+export function stringToArray(line: string, separator: string): Array<string> {
     let result: Array<string> = []
-    if (value !== '') {
-        result = value.split(separator)
+    if (line !== '') {
+        result = line.split(separator)
     } else {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
