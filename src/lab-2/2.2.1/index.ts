@@ -22,7 +22,7 @@ export function trimAroundString(line: String): string {
     return line.trim()
 }
 
-export function checkInputForNotEmpty(line: string): string {
+export function checkFullnessInputString(line: string): string {
     if (line === '') {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
@@ -32,7 +32,7 @@ export function checkInputForNotEmpty(line: string): string {
 function main(): void {
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for trim: \n', (answer: string) => {
-        const line = checkInputForNotEmpty(answer)
+        const line = checkFullnessInputString(answer)
         const result = trimAroundString(line)
         console.log(result)
         readLineInterface.close()

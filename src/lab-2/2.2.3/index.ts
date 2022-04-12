@@ -58,7 +58,7 @@ function main(arguments2: Array<string>): void {
         const readLineInterface: Interface = createInterface({input, output})
         const findString = args[2]
         const replaceString = args[3]
-        const line = checkFullnessInputString(answer);
+        const line = checkFullnessInputString(answer)
         const result = replaceInString(line, findString, replaceString)
         console.log(result)
 

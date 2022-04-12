@@ -10,7 +10,7 @@ const ERRORS = {
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
-    },
+    }
 }
 
 function printErrorsAndExit(error: ProgramError) {
@@ -18,11 +18,11 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-function trimString(value: String): string {
+export function trimString(value: String): string {
     return value.replace(/\s+/g, ' ').trim()
 }
 
-export function checkInputForNotEmpty(line: string): string {
+export function checkFullnessInputString(line: string): string {
     if (line === '') {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
@@ -32,7 +32,7 @@ export function checkInputForNotEmpty(line: string): string {
 function main(): void {
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for trim: \n', (answer: string) => {
-        const line = checkInputForNotEmpty(answer)
+        const line = checkFullnessInputString(answer)
         const result = trimString(line)
         console.log(result)
         readLineInterface.close()
