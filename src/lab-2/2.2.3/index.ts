@@ -15,7 +15,7 @@ const ERRORS = {
     },
     LESS_ARGUMENTS: {
         code: 1,
-        message: 'Args so bad.'
+        message: 'The number of arguments is not enough.'
     },
     NO_MATCHES: {
         code: 1,
