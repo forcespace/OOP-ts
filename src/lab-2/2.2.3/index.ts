@@ -28,7 +28,7 @@ function printErrorsAndExit(error: ProgramError) {
     process.exit(error.code)
 }
 
-function parseArgs(args: Array<string>): Array<string> {
+function checkCountArgs(args: Array<string>): Array<string> {
     if (args.length !== 4) {
         printErrorsAndExit(ERRORS.LESS_ARGUMENTS)
     }
@@ -52,7 +52,7 @@ export function printLine(line: string): void {
 }
 
 function main(argument: Array<string>): void {
-    const args = parseArgs(argument)
+    const args = checkCountArgs(argument)
     const readLineInterface: Interface = createInterface({input, output})
     readLineInterface.question('Enter string for find and replace: \n', (answer: string) => {
         const readLineInterface: Interface = createInterface({input, output})
