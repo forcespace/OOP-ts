@@ -44,7 +44,7 @@ export function checkFullnessInputString(line: string): string {
 }
 
 export function replaceInString(line: string, searchValue: string, replaceValue: string): string {
-    return line.replace(searchValue, replaceValue)
+    return line.replaceAll(searchValue, replaceValue)
 }
 
 export function printLine(line: string): void {

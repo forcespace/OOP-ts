@@ -14,6 +14,10 @@ const ERRORS = {
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
+    },
+    ERROR_INPUT: {
+        code: 1,
+        message: 'Error. Any input not a number'
     }
 }
 
@@ -32,8 +36,22 @@ export function stringToArray(line: string, separator: string): Array<string> {
     return result
 }
 
+function isValidNumberOfRange(value: number): boolean {
+    return value <= Number.MAX_SAFE_INTEGER
+}
+
+function isValidInputWithOutChar(value: number): boolean {
+    return !isNaN(value)
+}
+
 export function arrayOfStringToArrayOfNumber(values: Array<string>): Array<number> {
-    return values.map((value: string) => parseFloat(value))
+
+    return values.map((value: string) => {
+        if (!isValidInputWithOutChar(parseFloat(value))) {
+            printErrorsAndExit(ERRORS.ERROR_INPUT)
+        }
+        return parseFloat(value)
+    })
 }
 
 export function getMinElementOfArray(array: Array<number>): number {
@@ -43,9 +61,12 @@ export function getMinElementOfArray(array: Array<number>): number {
 export function multipleElementsOfArrayToMin(array: Array<number>): Array<number> {
     const minElement = getMinElementOfArray(array)
 
-    return array.map((value: number) => (
-        value * minElement
-    ))
+    return array.map((value: number) => {
+        if (!isValidNumberOfRange(value)) {
+            printErrorsAndExit(ERRORS.RANGE_ERROR)
+        }
+        return value * minElement
+    })
 }
 
 export function sortArray(array: Array<number>, order: 'ASC' | 'DESC' = 'ASC'): Array<number> {
