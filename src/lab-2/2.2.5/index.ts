@@ -7,9 +7,9 @@ type ProgramError = {
 }
 
 const ERRORS = {
-    EMPTY_INPUT: {
+    EMPTY_PRINT: {
         code: 1,
-        message: 'Error. Empty input.'
+        message: 'Error. Empty print.'
     },
     NO_MATCHES: {
         code: 1,
@@ -51,10 +51,10 @@ function printErrorsAndExit(error: ProgramError) {
 }
 
 export function decodeHtml(line: string): string {
-    let encodeLine: string
+    let decodeLine: string
     for (const symbol of symbols) {
-        encodeLine = line.replaceAll(symbol.key, symbol.value)
-        line = encodeLine
+        decodeLine = line.replaceAll(symbol.key, symbol.value)
+        line = decodeLine
     }
     return line
 }
@@ -63,7 +63,7 @@ function printLine(line: string): void {
     if (line !== '') {
         console.log(line)
     } else {
-        printErrorsAndExit(ERRORS.EMPTY_INPUT)
+        printErrorsAndExit(ERRORS.EMPTY_PRINT)
     }
 }
 
