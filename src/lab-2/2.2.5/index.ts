@@ -69,7 +69,7 @@ function printLine(line: string): void {
 
 function main(): void {
     const readLineInterface: Interface = createInterface({input, output})
-    readLineInterface.question('Enter string to decoding the HTML entities of the html string, available in version 4, back to their character representation: \n',
+    readLineInterface.question('Enter string to decoding the HTML entities of the html string, back to their character representation: \n',
         (answer: string) => {
             const readLineInterface: Interface = createInterface({input, output})
             const result = decodeHtml(answer)
