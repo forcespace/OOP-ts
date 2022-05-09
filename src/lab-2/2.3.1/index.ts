@@ -21,12 +21,16 @@ const ERRORS = {
     }
 }
 
+type WordsCount = {
+    [key: string]: number
+}
+
 function printErrorsAndExit(error: ProgramError) {
     console.log(error.message)
     process.exit(error.code)
 }
 
-export function stringToArray(line: string, separator: string): Array<string> {
+export function stringToArray(line: string, separator: string = ' '): Array<string> {
     let result: Array<string> = []
     if (line !== '') {
         result = line.split(separator)
@@ -36,25 +40,39 @@ export function stringToArray(line: string, separator: string): Array<string> {
     return result
 }
 
-export function getWordsCount(value: string): string {
-    const result = ''
-    const splited = value.split(' ')
+export function getWordsCount(value: Array<string>): WordsCount {
+    let result: WordsCount = {}
+    value.map(word => {
+        if (!result[word]) {
+            result[word] = 0
+        }
+        result[word] += 1
+    })
 
-    
-
+    console.log(result)
     return result
 }
 
-function printArray(result: number[]): void {
-    console.log(result)
+function arrayToString<T>(array: Array<T>, separator: string = ''): string {
+    return array.join(separator)
+}
+
+function getObjectKeyValuePairsString<T>(object: T, separator: string = ': '): Array<string> {
+    return Object.entries(object).map(([key, value]) => `${key}${separator}${value}`)
+}
+
+function printObject(object: WordsCount): void {
+    const keyValuePairsString = getObjectKeyValuePairsString<WordsCount>(object)
+    const line = arrayToString<string>(keyValuePairsString, '\n')
+    console.log(line)
 }
 
 function main(): void {
-    const separator = ' '
-
     const readLineInterface: Interface = createInterface({input, output})
-    readLineInterface.question('Enter array of words for calculate: \n', (answer: string) => {
-
+    readLineInterface.question('Enter words for calculate: \n', (answer: string) => {
+        const arrayOfString = stringToArray(answer)
+        const wordsCount = getWordsCount(arrayOfString)
+        printObject(wordsCount)
         readLineInterface.close()
     })
 }
