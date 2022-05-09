@@ -7,17 +7,9 @@ type ProgramError = {
 }
 
 const ERRORS = {
-    RANGE_ERROR: {
-        code: 1,
-        message: 'Error. Value very big.'
-    },
     EMPTY_INPUT: {
         code: 1,
         message: 'Error. Empty input.'
-    },
-    ERROR_INPUT: {
-        code: 1,
-        message: 'Error. Any input not a number'
     }
 }
 
@@ -49,7 +41,6 @@ export function getWordsCount(value: Array<string>): WordsCount {
         result[word] += 1
     })
 
-    console.log(result)
     return result
 }
 
