@@ -7,9 +7,9 @@ type ProgramError = {
 }
 
 const ERRORS = {
-    EMPTY_PRINT: {
+    EMPTY_INPUT: {
         code: 1,
-        message: 'Error. Empty print.'
+        message: 'Error. Empty input.'
     },
     NO_MATCHES: {
         code: 1,
@@ -45,6 +45,13 @@ const symbols: htmlSymbols[] = [
     }
 ]
 
+export function checkFullnessInputString(line: string): string {
+    if (line === '') {
+        printErrorsAndExit(ERRORS.EMPTY_INPUT)
+    }
+    return line
+}
+
 function printErrorsAndExit(error: ProgramError) {
     console.log(error.message)
     process.exit(error.code)
@@ -60,11 +67,7 @@ export function decodeHtml(line: string): string {
 }
 
 function printLine(line: string): void {
-    if (line !== '') {
-        console.log(line)
-    } else {
-        printErrorsAndExit(ERRORS.EMPTY_PRINT)
-    }
+    console.log(line)
 }
 
 function main(): void {
@@ -72,7 +75,8 @@ function main(): void {
     readLineInterface.question('Enter string to decoding the HTML entities of the html string, back to their character representation: \n',
         (answer: string) => {
             const readLineInterface: Interface = createInterface({input, output})
-            const result = decodeHtml(answer)
+            const line = checkFullnessInputString(answer)
+            const result = decodeHtml(line)
             printLine(result)
             readLineInterface.close()
         })
