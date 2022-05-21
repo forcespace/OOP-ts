@@ -1,17 +1,17 @@
-enum Direction {
+export enum Direction {
     Back = -1,
     Stop,
     Forward
 }
 
-enum Gear {
-    Rear = -1,
-    Neutral,
-    First,
-    Second,
-    Third,
-    Fourth,
-    Fifth
+export enum Gear {
+    Rear = '-1',
+    Neutral = '0',
+    First = '1',
+    Second = '2',
+    Third = '3',
+    Fourth = '4',
+    Fifth = '5'
 }
 
 const GEAR_LIMITS = {
@@ -75,18 +75,12 @@ export class Car {
     }
 
     public TurnOnEngine(): boolean {
-        if (this.IsTurnedOn()) {
-            return true
-        }
-
         this.engineTurnedOn = true
         return true
     }
 
     public TurnOffEngine(): boolean {
-        if (!this.IsTurnedOn()) {
-            return true
-        } else if (this.GetGear() === 0 && this.GetSpeed() === 0) {
+        if (this.GetGear() === Gear.Neutral && this.GetSpeed() === 0) {
             this.engineTurnedOn = false
             return true
         }
@@ -94,7 +88,7 @@ export class Car {
     }
 
     public SetGear(targetGear: Gear): boolean {
-        if (targetGear in Gear) {
+        // if (targetGear in Gear) {
 
             if (targetGear === Gear.Rear) {
                 if (this.GetSpeed() === 0) {
@@ -120,27 +114,19 @@ export class Car {
 
             const speed = this.GetSpeed()
             const speedLimit = GEAR_LIMITS[targetGear]
-            if (speedLimit.min <= speed && speedLimit.max > speed) {
+            if (speedLimit.min <= speed && speedLimit.max >= speed) {
                 this.gear = targetGear
                 return true
             }
 
             return false
-        }
+        // }
 
-        return false
+        // return false
     }
 
     public SetSpeed(targetSpeed: number): boolean {
         const currentGear = this.GetGear()
-        if (!this.IsTurnedOn()) {
-            return false
-        } else if (targetSpeed < 0) {
-            return false
-        }
-        if (targetSpeed > this.GetSpeed() && currentGear === Gear.Neutral) {
-            return false
-        }
 
         const speedLimit = GEAR_LIMITS[currentGear]
         if (speedLimit.min <= targetSpeed && speedLimit.max >= targetSpeed) {
