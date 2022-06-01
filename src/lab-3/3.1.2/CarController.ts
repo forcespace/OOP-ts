@@ -1,35 +1,26 @@
 import {Car, Direction, Gear} from './Car'
 
-const ERROR = {
-    ENGINE_ALREADY_TURNED_ON: 'ENGINE_ALREADY_TURNED_ON',
-    ENGINE_CAN_NOT_TURNED_ON: 'ENGINE_CAN_NOT_TURNED_ON',
-    ENGINE_NOT_TURNED_ON: 'ENGINE_NOT_TURNED_ON',
-    ENGINE_CAN_NOT_TURNED_OFF: 'ENGINE_CAN_NOT_TURNED_OFF',
-    GEAR_NOT_EXIST: 'GEAR_NOT_EXIST',
-    GEAR_NOT_CORRECT: 'GEAR_NOT_CORRECT',
-    GEAR_CAN_NOT_SET_FOR_DIRECTION: 'GEAR_CAN_NOT_SET_FOR_DIRECTION',
-    GEAR_CAN_NOT_SET_FOR_SPEED: 'GEAR_CAN_NOT_SET_FOR_SPEED',
-    GEAR_CAN_NOT_CHANGE_DIRECTION: 'GEAR_CAN_NOT_CHANGE_DIRECTION',
-    GEAR_CAN_NOT_SET: 'GEAR_CAN_NOT_SET',
-    GEAR_CAN_NOT_READ_TARGET_GEAR: 'GEAR_CAN_NOT_READ_TARGET_GEAR',
-    SPEED_CAN_NOT_READ_TARGET_SPEED: 'SPEED_CAN_NOT_READ_TARGET_SPEED',
-    SPEED_NOT_VALID: 'SPEED_NOT_VALID',
-    SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF: 'SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF',
-    SPEED_CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL: 'SPEED_CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL',
-    UNKNOWN_COMMAND: 'UNKNOWN_COMMAND'
-}
-
-const MESSAGE = {
-    ENGINE_TURNED_ON: 'ENGINE_TURNED_ON',
-    ENGINE_TURNED_OFF: 'ENGINE_TURNED_OFF',
-    GEAR_IS_SET: 'GEAR_IS_SET',
-    SPEED_IS_SET: 'SPEED_IS_SET'
-}
-
-const MESSAGES_2 = {
+const MESSAGES = {
+    ENGINE: {
+        ERROR: {
+            ALREADY_TURNED_ON: 'ENGINE ALREADY TURNED ON',
+            CAN_NOT_TURNED_ON: 'ENGINE CAN NOT TURNED ON',
+            NOT_TURNED_ON: 'ENGINE NOT TURNED ON',
+            CAN_NOT_TURNED_OFF: 'ENGINE CAN NOT TURNED OFF'
+        },
+        MESSAGE: {
+            TURNED_ON: 'ENGINE TURNED ON',
+            TURNED_OFF: 'ENGINE TURNED OFF'
+        }
+    },
     GEAR: {
         ERROR: {
-            CAN_NOT_SET_FOR_DIRECTION: 'GEAR CAN NOT SET FOR DIRECTION'
+            CAN_NOT_SET_FOR_DIRECTION: 'GEAR CAN NOT SET FOR DIRECTION',
+            CAN_NOT_READ_TARGET_GEAR: 'GEAR CAN NOT READ TARGET GEAR',
+            CAN_NOT_SET: 'GEAR CAN NOT SET',
+            CAN_NOT_CHANGE_DIRECTION: 'GEAR CAN NOT CHANGE DIRECTION',
+            CAN_NOT_SET_FOR_SPEED: 'GEAR CAN NOT SET FOR SPEED',
+            NOT_EXIST: 'GEAR NOT EXIST'
         },
         MESSAGE: {
             IS_SET: 'GEAR IS SET'
@@ -38,10 +29,18 @@ const MESSAGES_2 = {
     SPEED: {
         ERROR: {
             NOT_VALID: 'SPEED NOT VALID',
-            NOT_VALID_FOR_GEAR: 'NOT_VALID_FOR_GEAR'
+            NOT_VALID_SPEED_FOR_GEAR: 'NOT VALID SPEED FOR GEAR',
+            CAN_NOT_READ_TARGET_SPEED: 'SPEED CAN NOT READ TARGET SPEED',
+            CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF: 'SPEED CAN NOT SET BECAUSE ENGINE TURNED OFF',
+            CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL: 'CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL'
         },
         MESSAGE: {
             IS_SET: 'SPEED IS SET'
+        }
+    },
+    OTHER: {
+        ERROR: {
+            UNKNOWN_COMMAND: 'UNKNOWN COMMAND'
         }
     }
 }
@@ -71,7 +70,7 @@ export class CarController {
                 return this.setSpeed(value)
             }
             default : {
-                return ERROR.UNKNOWN_COMMAND
+                return MESSAGES.OTHER.ERROR.UNKNOWN_COMMAND
             }
         }
     }
@@ -111,35 +110,35 @@ gear: ${gear}`
 
     private turnEngineOn() {
         if (this.car.IsTurnedOn()) {
-            return ERROR.ENGINE_ALREADY_TURNED_ON
+            return MESSAGES.ENGINE.ERROR.ALREADY_TURNED_ON
         }
         const result = this.car.TurnOnEngine()
 
         if (result) {
-            return MESSAGE.ENGINE_TURNED_ON
+            return MESSAGES.ENGINE.MESSAGE.TURNED_ON
         }
 
-        return ERROR.ENGINE_CAN_NOT_TURNED_ON
+        return MESSAGES.ENGINE.ERROR.CAN_NOT_TURNED_ON
     }
 
     private turnEngineOff() {
         if (!this.car.IsTurnedOn()) {
-            return ERROR.ENGINE_NOT_TURNED_ON
+            return MESSAGES.ENGINE.ERROR.NOT_TURNED_ON
         }
 
         const result = this.car.TurnOffEngine()
         if (result) {
-            return MESSAGE.ENGINE_TURNED_OFF
+            return MESSAGES.ENGINE.MESSAGE.TURNED_OFF
         }
 
-        return ERROR.ENGINE_CAN_NOT_TURNED_OFF
+        return MESSAGES.ENGINE.ERROR.CAN_NOT_TURNED_OFF
     }
 
     private setGear(value?: string) {
-        if (!value) return ERROR.GEAR_CAN_NOT_READ_TARGET_GEAR
+        if (!value) return MESSAGES.GEAR.ERROR.CAN_NOT_READ_TARGET_GEAR
         if (this.isValidTargetGear(value)) {
             if (!this.car.IsTurnedOn()) {
-                return ERROR.ENGINE_NOT_TURNED_ON
+                return MESSAGES.ENGINE.ERROR.NOT_TURNED_ON
             }
 
             const targetGear: Gear = this.parseGear(value) as Gear
@@ -151,50 +150,50 @@ gear: ${gear}`
                 if (speed === 0) {
                     const result = this.car.SetGear(targetGear)
                     if (result) {
-                        return MESSAGE.GEAR_IS_SET
+                        return MESSAGES.GEAR.MESSAGE.IS_SET
                     }
-                    return ERROR.GEAR_CAN_NOT_SET
+
+                    return MESSAGES.GEAR.ERROR.CAN_NOT_SET
                 }
 
-                return ERROR.GEAR_CAN_NOT_SET_FOR_DIRECTION
+                return MESSAGES.GEAR.ERROR.CAN_NOT_SET_FOR_DIRECTION
+
             } else if (targetGear !== Gear.Neutral && direction === Direction.Back && speed !== 0) {
-                return ERROR.GEAR_CAN_NOT_CHANGE_DIRECTION
+                return MESSAGES.GEAR.ERROR.CAN_NOT_CHANGE_DIRECTION
             }
 
             const result = this.car.SetGear(targetGear)
             if (result) {
-                return MESSAGE.GEAR_IS_SET
+                return MESSAGES.GEAR.MESSAGE.IS_SET
             }
-            return ERROR.GEAR_CAN_NOT_SET_FOR_SPEED
+            return MESSAGES.GEAR.ERROR.CAN_NOT_SET_FOR_SPEED
         }
 
-        return ERROR.GEAR_NOT_EXIST
-
-
+        return MESSAGES.GEAR.ERROR.NOT_EXIST
     }
 
     private setSpeed(value?: string) {
         if (!value) {
-            return ERROR.SPEED_CAN_NOT_READ_TARGET_SPEED
+            return MESSAGES.SPEED.ERROR.CAN_NOT_READ_TARGET_SPEED
         }
 
         if (this.isValidTargetSpeed(value)) {
             const targetSpeed = parseFloat(this.parseSpeed(value) as string)
 
             if (!this.car.IsTurnedOn()) {
-                return ERROR.SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF
+                return MESSAGES.SPEED.ERROR.CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF
             }
 
             if (this.car.GetSpeed() < targetSpeed && this.car.GetGear() === Gear.Neutral) {
-                return ERROR.SPEED_CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL
+                return MESSAGES.SPEED.ERROR.CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL
             }
 
             const result = this.car.SetSpeed(targetSpeed)
 
-            if (result) return MESSAGES_2.SPEED.MESSAGE.IS_SET
-            return MESSAGES_2.SPEED.ERROR.NOT_VALID_FOR_GEAR
+            if (result) return MESSAGES.SPEED.MESSAGE.IS_SET
+            return MESSAGES.SPEED.ERROR.NOT_VALID_SPEED_FOR_GEAR
         }
 
-        return ERROR.SPEED_NOT_VALID
+        return MESSAGES.SPEED.ERROR.NOT_VALID
     }
 }
