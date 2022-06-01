@@ -5,7 +5,7 @@ import {Car, Gear} from '../../../src/lab-3/3.1.2/Car'
 describe('Car:', () => {
     let car: Car
 
-    describe('Create new car', () => {
+    describe('Create new default car', () => {
         beforeEach(() => {
             car = new Car()
         })
@@ -27,7 +27,7 @@ describe('Car:', () => {
         })
     })
 
-    describe('engine tests.', () => {
+    describe('Engine', () => {
         beforeEach(() => {
             car = new Car()
         })
@@ -48,6 +48,68 @@ describe('Car:', () => {
             car.TurnOnEngine()
             car.SetGear(Gear.First)
             expect(car.IsTurnedOn()).equal(true)
+        })
+    })
+
+    describe('Speed', () => {
+        beforeEach(() => {
+            car = new Car()
+            car.TurnOnEngine()
+        })
+
+        it('Car on first gear should set speed 30', () => {
+            car.SetGear(Gear.First)
+            expect(car.GetGear()).equal(Gear.First)
+            car.SetSpeed(30)
+            expect(car.GetSpeed()).equal(30)
+        })
+
+        it('Car on second gear should set speed 50', () => {
+            car.SetGear(Gear.First)
+            car.SetSpeed(30)
+            car.SetGear(Gear.Second)
+            car.SetSpeed(50)
+            expect(car.GetGear()).equal(Gear.Second)
+            expect(car.GetSpeed()).equal(50)
+        })
+
+        it('Car on third gear should set speed 60', () => {
+            car.SetGear(Gear.First)
+            car.SetSpeed(30)
+            car.SetGear(Gear.Second)
+            car.SetSpeed(50)
+            car.SetGear(Gear.Third)
+            car.SetSpeed(60)
+            expect(car.GetGear()).equal(Gear.Third)
+            expect(car.GetSpeed()).equal(60)
+        })
+
+        it('Car on fourth gear should set speed 90', () => {
+            car.SetGear(Gear.First)
+            car.SetSpeed(30)
+            car.SetGear(Gear.Second)
+            car.SetSpeed(50)
+            car.SetGear(Gear.Third)
+            car.SetSpeed(60)
+            car.SetGear(Gear.Fourth)
+            car.SetSpeed(90)
+            expect(car.GetGear()).equal(Gear.Fourth)
+            expect(car.GetSpeed()).equal(90)
+        })
+
+        it('Car on fifth gear should set speed 90', () => {
+            car.SetGear(Gear.First)
+            car.SetSpeed(30)
+            car.SetGear(Gear.Second)
+            car.SetSpeed(50)
+            car.SetGear(Gear.Third)
+            car.SetSpeed(60)
+            car.SetGear(Gear.Fourth)
+            car.SetSpeed(90)
+            car.SetGear(Gear.Fifth)
+            car.SetSpeed(150)
+            expect(car.GetGear()).equal(Gear.Fifth)
+            expect(car.GetSpeed()).equal(150)
         })
     })
 })
