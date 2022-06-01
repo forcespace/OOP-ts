@@ -51,7 +51,7 @@ describe('Car:', () => {
         })
     })
 
-    describe('Speed', () => {
+    describe('Speed / Gears', () => {
         beforeEach(() => {
             car = new Car()
             car.TurnOnEngine()
@@ -110,6 +110,32 @@ describe('Car:', () => {
             car.SetSpeed(150)
             expect(car.GetGear()).equal(Gear.Fifth)
             expect(car.GetSpeed()).equal(150)
+        })
+    })
+
+    describe('direction tests.', () => {
+        beforeEach(() => {
+            car = new Car()
+            car.TurnOnEngine()
+        })
+
+        it('Car should move backward', () => {
+            car.SetGear(Gear.Rear)
+            car.SetSpeed(10)
+            expect(car.GetDirection()).equal(-1)
+        })
+
+        it('Car should stand', () => {
+            car.SetGear(Gear.Rear)
+            car.SetSpeed(10)
+            car.SetSpeed(0)
+            expect(car.GetDirection()).equal(0)
+        })
+
+        it('Car should move forward', () => {
+            car.SetGear(Gear.First)
+            car.SetSpeed(10)
+            expect(car.GetDirection()).equal(1)
         })
     })
 })
