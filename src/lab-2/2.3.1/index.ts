@@ -29,6 +29,7 @@ export function stringToArray(line: string, separator: string = ' '): Array<stri
     } else {
         printErrorsAndExit(ERRORS.EMPTY_INPUT)
     }
+
     return result
 }
 
@@ -44,7 +45,8 @@ export function getWordsCount(value: Array<string>): WordsCount {
     return result
 }
 
-function arrayToString<T>(array: Array<T>, separator: string = ''): string {
+export function arrayToString<T>(array: Array<T>, separator: string = ''): string {
+    console.log(array.join(separator))
     return array.join(separator)
 }
 
