@@ -88,7 +88,6 @@ export class Car {
     }
 
     public SetGear(targetGear: Gear): boolean {
-
         if (targetGear === Gear.Rear) {
             if (this.GetSpeed() === 0) {
                 this.gear = Gear.Rear
@@ -97,6 +96,7 @@ export class Car {
             }
 
             return false
+
         } else if (targetGear === Gear.Neutral) {
 
         } else if (targetGear === Gear.First && (this.direction === Direction.Back || this.direction === Direction.Stop)) {
