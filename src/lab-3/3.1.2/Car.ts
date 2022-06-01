@@ -88,41 +88,35 @@ export class Car {
     }
 
     public SetGear(targetGear: Gear): boolean {
-        // if (targetGear in Gear) {
 
-            if (targetGear === Gear.Rear) {
-                if (this.GetSpeed() === 0) {
-                    this.gear = Gear.Rear
-                    // this.direction = Direction.Back
+        if (targetGear === Gear.Rear) {
+            if (this.GetSpeed() === 0) {
+                this.gear = Gear.Rear
 
-                    return true
-                }
-
-                return false
-            } else if (targetGear === Gear.Neutral) {
-
-            } else if (targetGear === Gear.First && (this.direction === Direction.Back || this.direction === Direction.Stop)) {
-                if (this.GetSpeed() === 0) {
-                    this.gear = Gear.First
-                    // this.direction = Direction.Forward
-
-                    return true
-                }
-
-                return false
-            }
-
-            const speed = this.GetSpeed()
-            const speedLimit = GEAR_LIMITS[targetGear]
-            if (speedLimit.min <= speed && speedLimit.max >= speed) {
-                this.gear = targetGear
                 return true
             }
 
             return false
-        // }
+        } else if (targetGear === Gear.Neutral) {
 
-        // return false
+        } else if (targetGear === Gear.First && (this.direction === Direction.Back || this.direction === Direction.Stop)) {
+            if (this.GetSpeed() === 0) {
+                this.gear = Gear.First
+
+                return true
+            }
+
+            return false
+        }
+
+        const speed = this.GetSpeed()
+        const speedLimit = GEAR_LIMITS[targetGear]
+        if (speedLimit.min <= speed && speedLimit.max >= speed) {
+            this.gear = targetGear
+            return true
+        }
+
+        return false
     }
 
     public SetSpeed(targetSpeed: number): boolean {

@@ -1,6 +1,4 @@
 import {Car, Direction, Gear} from './Car'
-//
-// type Command = 'Info' | 'EngineOn' | 'EngineOff' | 'SetGear' | 'SetSpeed' | 'Exit'
 
 const ERROR = {
     ENGINE_ALREADY_TURNED_ON: 'ENGINE_ALREADY_TURNED_ON',
@@ -18,7 +16,7 @@ const ERROR = {
     SPEED_NOT_VALID: 'SPEED_NOT_VALID',
     SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF: 'SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF',
     SPEED_CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL: 'SPEED_CAN_NOT_INCREASE_BECAUSE_GEAR_IS_NEUTRAL',
-    UNKNOWN_COMMAND: 'UNKNOWN_COMMAND',
+    UNKNOWN_COMMAND: 'UNKNOWN_COMMAND'
 }
 
 const MESSAGE = {
@@ -44,43 +42,6 @@ const MESSAGES_2 = {
         },
         MESSAGE: {
             IS_SET: 'SPEED IS SET'
-        }
-    }
-}
-
-function parseGear(value: string) {
-    const result = /^(?:-\s?)?\d$/.exec(value)
-
-    return result ? result[0] : null
-}
-
-function isValidTargetGear(value: string) {
-    return parseGear(value) !== null
-}
-
-function parseSpeed(value: string) {
-    const result = /^[\d]+(?:.\d+)?$/.exec(value)
-
-    return result ? result[0] : null
-}
-
-function isValidTargetSpeed(value: string) {
-    return parseSpeed(value) !== null
-}
-
-function getHumanReadableGear(value: Gear) {
-    switch (value) {
-        case Gear.Rear: {
-            return 'Rear'
-        }
-        case Gear.Neutral: {
-            return 'Neutral'
-        }
-        case Gear.First: {
-            return 'First'
-        }
-        default: {
-            return ''
         }
     }
 }
@@ -115,6 +76,26 @@ export class CarController {
         }
     }
 
+    private parseGear(value: string) {
+        const result = /^(?:-\s?)?\d$/.exec(value)
+
+        return result ? result[0] : null
+    }
+
+    private isValidTargetGear(value: string) {
+        return this.parseGear(value) !== null
+    }
+
+    private parseSpeed(value: string) {
+        const result = /^[\d]+(?:.\d+)?$/.exec(value)
+
+        return result ? result[0] : null
+    }
+
+    private isValidTargetSpeed(value: string) {
+        return this.parseSpeed(value) !== null
+    }
+
     private getCarInfo() {
         const engineTurnedOn = this.car.IsTurnedOn()
         const direction = this.car.GetDirection()
@@ -125,8 +106,7 @@ export class CarController {
 engineTurnedOn: ${engineTurnedOn}
 direction: ${direction}
 speed: ${speed}
-gear: ${gear}
-gear: ${getHumanReadableGear(gear)}`
+gear: ${gear}`
     }
 
     private turnEngineOn() {
@@ -157,12 +137,12 @@ gear: ${getHumanReadableGear(gear)}`
 
     private setGear(value?: string) {
         if (!value) return ERROR.GEAR_CAN_NOT_READ_TARGET_GEAR
-        if (isValidTargetGear(value)) {
+        if (this.isValidTargetGear(value)) {
             if (!this.car.IsTurnedOn()) {
                 return ERROR.ENGINE_NOT_TURNED_ON
             }
 
-            const targetGear: Gear = parseGear(value) as Gear
+            const targetGear: Gear = this.parseGear(value) as Gear
 
             const speed = this.car.GetSpeed()
             const direction = this.car.GetDirection()
@@ -194,13 +174,12 @@ gear: ${getHumanReadableGear(gear)}`
     }
 
     private setSpeed(value?: string) {
-
         if (!value) {
             return ERROR.SPEED_CAN_NOT_READ_TARGET_SPEED
         }
 
-        if (isValidTargetSpeed(value)) {
-            const targetSpeed = parseFloat(parseSpeed(value) as string)
+        if (this.isValidTargetSpeed(value)) {
+            const targetSpeed = parseFloat(this.parseSpeed(value) as string)
 
             if (!this.car.IsTurnedOn()) {
                 return ERROR.SPEED_CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF
@@ -217,9 +196,5 @@ gear: ${getHumanReadableGear(gear)}`
         }
 
         return ERROR.SPEED_NOT_VALID
-    }
-
-    private exit() {
-
     }
 }
