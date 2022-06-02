@@ -113,7 +113,7 @@ describe('Car:', () => {
         })
     })
 
-    describe('direction tests.', () => {
+    describe('Direction', () => {
         beforeEach(() => {
             car = new Car()
             car.TurnOnEngine()
