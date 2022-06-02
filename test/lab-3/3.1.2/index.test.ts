@@ -43,12 +43,6 @@ describe('Car:', () => {
             expect(car.GetSpeed()).equal(0)
             expect(car.IsTurnedOn()).equal(false)
         })
-
-        it('Car shouldn\'t turn off the engine with not stand direction', () => {
-            car.TurnOnEngine()
-            car.SetGear(Gear.First)
-            expect(car.IsTurnedOn()).equal(true)
-        })
     })
 
     describe('Speed / Gears', () => {
