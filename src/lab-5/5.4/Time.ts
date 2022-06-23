@@ -1,8 +1,18 @@
+import exp from 'constants'
+
 const SECONDS_IN_HOUR = 3600
 const SECONDS_IN_MINUTE = 60
 const SECONDS_IN_DAY = 86400
+const HOURS_IN_DAY = 24
 
-class Time {
+const MESSAGES = {
+    ERROR: {
+        NOT_INT: 'Input must be integer',
+        BAD_VALUE: 'Must be > 0',
+    }
+}
+
+export class Time {
     private seconds: number
     private valid: boolean = true
 
@@ -37,7 +47,7 @@ class Time {
 
     public static multi(time: Time, coefficient: number): Time {
         if (!Number.isInteger(coefficient)) {
-            // throw new Error(ERROR_MESSAGE_NOT_INTEGER)
+            console.log(MESSAGES.ERROR.NOT_INT)
         }
 
         const temporaryTimestamp: number = Time.getCorrectSeconds(time.seconds * coefficient)
@@ -45,21 +55,21 @@ class Time {
     }
 
     public static div(dividend: Time, divisor: Time | number): Time {
-        //можно вынести одинаковый код
         let temporaryTimestamp: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
-                // throw new Error(ERROR_MESSAGE_NULL)
+                console.log(MESSAGES.ERROR.BAD_VALUE)
+
             }
 
             if (!Number.isInteger(divisor)) {
-                // throw new Error(ERROR_MESSAGE_NOT_INTEGER)
+                console.log(MESSAGES.ERROR.NOT_INT)
             }
 
             temporaryTimestamp = dividend.seconds / divisor
         } else {
             if (divisor.seconds === 0) {
-                // throw new Error(ERROR_MESSAGE_NULL)
+                console.log(MESSAGES.ERROR.BAD_VALUE)
             }
             temporaryTimestamp = dividend.seconds / divisor.seconds
         }
@@ -116,18 +126,15 @@ class Time {
     }
 
     private static isValidHoursParameter(hours: number): boolean {
-        return Number.isInteger(hours) && hours >= 0 && hours < 24
-
+        return Number.isInteger(hours) && hours >= 0 && hours < HOURS_IN_DAY
     }
 
     private static isValidMinutesParameter(minutes: number): boolean {
         return Number.isInteger(minutes) && minutes >= 0 && minutes < 60
-
     }
 
     private static isValidSecondsParameter(seconds: number): boolean {
         return Number.isInteger(seconds) && seconds >= 0 && seconds < 60
-
     }
 
     private static getCorrectSeconds(timestamp: number): number {
@@ -191,7 +198,6 @@ class Time {
     }
 
     public addWithAssignment(time: Time): Time {
-        // const temporarySeconds = this.seconds + time.seconds
         const next = Time.add(this, time)
 
         this.seconds = Time.getCorrectSeconds(next.seconds)
@@ -204,10 +210,9 @@ class Time {
         return this
     }
 
-    // исп Time.multi(this, coef)
     public multiWithAssignment(coefficient: number): Time {
         if (!Number.isInteger(coefficient)) {
-            // throw new Error(ERROR_MESSAGE_NOT_INTEGER)
+            console.log(MESSAGES.ERROR.NOT_INT)
         }
 
         let temporarySeconds: number
@@ -217,21 +222,20 @@ class Time {
         return this
     }
 
-    // исп Time.div(this, div)
     public divWithAssignment(divisor: Time | number): Time {
         let temporarySeconds: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
-                // throw new Error(ERROR_MESSAGE_NULL)
+                console.log(MESSAGES.ERROR.BAD_VALUE)
             }
 
             if (!Number.isInteger(divisor)) {
-                // throw new Error(ERROR_MESSAGE_NOT_INTEGER)
+                console.log(MESSAGES.ERROR.NOT_INT)
             }
             temporarySeconds = this.seconds / divisor
         } else {
             if (divisor.seconds === 0) {
-                // throw new Error(ERROR_MESSAGE_NULL)
+                console.log(MESSAGES.ERROR.NOT_INT)
             }
             temporarySeconds = this.seconds / divisor.seconds
         }
@@ -266,21 +270,23 @@ class Time {
     }
 }
 
-const time = new Time(23, 59, 59)
-console.log(time.getHours())
-console.log(time.getMinutes())
-console.log(time.getSeconds())
-console.log(time.isValid())
-console.log(time.print())
-console.log(time.postIncrement())
-console.log(time.getHours())
-console.log(time.getMinutes())
-console.log(time.getSeconds())
-console.log(time.isValid())
-console.log(time.print())
-console.log(time.init('12:00:01'))
-console.log(time.getHours())
-console.log(time.getMinutes())
-console.log(time.getSeconds())
-console.log(time.isValid())
-console.log(time.print())
+// const time = new Time(23, 59, 59)
+// const time2 = new Time(0, 0, 10)
+// console.log(time.getHours())
+// console.log(time.getMinutes())
+// console.log(time.getSeconds())
+// console.log(time.isValid())
+// console.log(time.print())
+// console.log(time.postIncrement())
+// console.log(time.getHours())
+// console.log(time.getMinutes())
+// console.log(time.getSeconds())
+// console.log(time.isValid())
+// console.log(time.print())
+// console.log(time.init('12:00:01'))
+// console.log(time.getHours())
+// console.log(time.getMinutes())
+// console.log(time.getSeconds())
+// console.log(time.isValid())
+// console.log(time.subWithAssignment(time2))
+// console.log(time.print())
