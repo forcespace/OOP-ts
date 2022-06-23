@@ -100,7 +100,6 @@ export class Index {
 
     private static convertToTimestamp(hours: number, minutes: number, seconds: number) {
         return hours * SECONDS_IN_HOUR + minutes * SECONDS_IN_MINUTE + seconds
-
     }
 
     private static hoursInTimestamp(timestamp: number): number {
