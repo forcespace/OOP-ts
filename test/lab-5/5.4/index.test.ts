@@ -70,10 +70,10 @@ describe('Time', () => {
         expect(time).eql(addWithAssignment)
     })
 
-    it('11:00:00 + 01:00:01 = 11:00:00', () => {
-        time = new Time(14, 30, 25)
-        const time2: Time = new Time(3, 18, 44)
-        const subWithAssignment: Time = new Time(11, 11, 41)
+    it('11:00:01 - 01:00:01 = 10:00:00', () => {
+        time = new Time(11, 0, 0)
+        const time2: Time = new Time(1, 0, 0)
+        const subWithAssignment: Time = new Time(10, 0, 0)
         expect(time.subWithAssignment(time2)).eql(subWithAssignment)
         expect(time).eql(subWithAssignment)
     })
