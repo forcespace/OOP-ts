@@ -10,7 +10,7 @@ const MESSAGES = {
     }
 }
 
-export class CTime {
+export class Time {
     private seconds: number
     private valid: boolean = true
 
@@ -18,41 +18,41 @@ export class CTime {
     // constructor(timestamp: number);
     constructor(hours: number, minutes: number, seconds = 0) {
         if (minutes !== undefined) {
-            this.valid = CTime.isValidParameters(hours, minutes, seconds)
-            this.seconds = CTime.convertToTimestamp(hours, minutes, seconds)
+            this.valid = Time.isValidParameters(hours, minutes, seconds)
+            this.seconds = Time.convertToTimestamp(hours, minutes, seconds)
         } else {
             this.seconds = hours
         }
     }
 
-    public static convertTimestampToTime(timestamp: number): CTime {
-        return new CTime(
-            CTime.hoursInTimestamp(timestamp),
-            CTime.minutesInTimestamp(timestamp),
-            CTime.secondsInTimestamp(timestamp)
+    public static convertTimestampToTime(timestamp: number): Time {
+        return new Time(
+            Time.hoursInTimestamp(timestamp),
+            Time.minutesInTimestamp(timestamp),
+            Time.secondsInTimestamp(timestamp)
         )
     }
 
-    public static add(time1: CTime, time2: CTime): CTime {
-        const temporaryTimestamp: number = CTime.getCorrectSeconds(time1.seconds + time2.seconds)
-        return CTime.convertTimestampToTime(temporaryTimestamp)
+    public static add(time1: Time, time2: Time): Time {
+        const temporaryTimestamp: number = Time.getCorrectSeconds(time1.seconds + time2.seconds)
+        return Time.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static sub(subtrahend: CTime, residual: CTime): CTime {
-        const temporaryTimestamp: number = CTime.getCorrectSeconds(subtrahend.seconds - residual.seconds)
-        return CTime.convertTimestampToTime(temporaryTimestamp)
+    public static sub(subtrahend: Time, residual: Time): Time {
+        const temporaryTimestamp: number = Time.getCorrectSeconds(subtrahend.seconds - residual.seconds)
+        return Time.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static multi(time: CTime, coefficient: number): CTime {
+    public static multi(time: Time, coefficient: number): Time {
         if (!Number.isInteger(coefficient)) {
             console.log(MESSAGES.ERROR.NOT_INT)
         }
 
-        const temporaryTimestamp: number = CTime.getCorrectSeconds(time.seconds * coefficient)
-        return CTime.convertTimestampToTime(temporaryTimestamp)
+        const temporaryTimestamp: number = Time.getCorrectSeconds(time.seconds * coefficient)
+        return Time.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static div(dividend: CTime, divisor: CTime | number): CTime {
+    public static div(dividend: Time, divisor: Time | number): Time {
         let temporaryTimestamp: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
@@ -70,31 +70,31 @@ export class CTime {
             }
             temporaryTimestamp = dividend.seconds / divisor.seconds
         }
-        temporaryTimestamp = Math.trunc(CTime.getCorrectSeconds(temporaryTimestamp))
-        return CTime.convertTimestampToTime(temporaryTimestamp)
+        temporaryTimestamp = Math.trunc(Time.getCorrectSeconds(temporaryTimestamp))
+        return Time.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static equal(time1: CTime, time2: CTime): boolean {
+    public static equal(time1: Time, time2: Time): boolean {
         return time1.seconds === time2.seconds
     }
 
-    public static notEqual(time1: CTime, time2: CTime): boolean {
+    public static notEqual(time1: Time, time2: Time): boolean {
         return time1.seconds !== time2.seconds
     }
 
-    public static isLarger(time1: CTime, time2: CTime): boolean {
+    public static isLarger(time1: Time, time2: Time): boolean {
         return time1.seconds > time2.seconds
     }
 
-    public static isNotLarger(time1: CTime, time2: CTime): boolean {
+    public static isNotLarger(time1: Time, time2: Time): boolean {
         return time1.seconds <= time2.seconds
     }
 
-    public static isLess(time1: CTime, time2: CTime): boolean {
+    public static isLess(time1: Time, time2: Time): boolean {
         return time1.seconds < time2.seconds
     }
 
-    public static isNotLess(time1: CTime, time2: CTime): boolean {
+    public static isNotLess(time1: Time, time2: Time): boolean {
         return time1.seconds >= time2.seconds
     }
 
@@ -107,18 +107,18 @@ export class CTime {
     }
 
     private static minutesInTimestamp(timestamp: number): number {
-        const hours: number = CTime.hoursInTimestamp(timestamp)
+        const hours: number = Time.hoursInTimestamp(timestamp)
         return Math.trunc((timestamp - hours * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE)
     }
 
     private static secondsInTimestamp(timestamp: number): number {
-        const hours: number = CTime.hoursInTimestamp(timestamp)
-        const minutes: number = CTime.minutesInTimestamp(timestamp)
+        const hours: number = Time.hoursInTimestamp(timestamp)
+        const minutes: number = Time.minutesInTimestamp(timestamp)
         return timestamp - hours * SECONDS_IN_HOUR - minutes * SECONDS_IN_MINUTE
     }
 
     private static isValidParameters(hours: number, minutes: number, seconds: number): boolean {
-        return CTime.isValidHoursParameter(hours) && CTime.isValidMinutesParameter(minutes) && CTime.isValidSecondsParameter(seconds)
+        return Time.isValidHoursParameter(hours) && Time.isValidMinutesParameter(minutes) && Time.isValidSecondsParameter(seconds)
     }
 
     private static isValidHoursParameter(hours: number): boolean {
@@ -148,65 +148,65 @@ export class CTime {
     }
 
     public getHours(): number {
-        return CTime.hoursInTimestamp(this.seconds)
+        return Time.hoursInTimestamp(this.seconds)
     }
 
     public getMinutes(): number {
-        return CTime.minutesInTimestamp(this.seconds)
+        return Time.minutesInTimestamp(this.seconds)
     }
 
     public getSeconds(): number {
-        return CTime.secondsInTimestamp(this.seconds)
+        return Time.secondsInTimestamp(this.seconds)
     }
 
     public isValid(): boolean {
         return this.valid
     }
 
-    public postIncrement(): CTime {
-        const temporaryTime: CTime = new CTime(
-            CTime.hoursInTimestamp(this.seconds),
-            CTime.minutesInTimestamp(this.seconds),
-            CTime.secondsInTimestamp(this.seconds)
+    public postIncrement(): Time {
+        const temporaryTime: Time = new Time(
+            Time.hoursInTimestamp(this.seconds),
+            Time.minutesInTimestamp(this.seconds),
+            Time.secondsInTimestamp(this.seconds)
         )
-        this.seconds = CTime.getCorrectSeconds(++this.seconds)
+        this.seconds = Time.getCorrectSeconds(++this.seconds)
         return temporaryTime
     }
 
-    public prefixIncrement(): CTime {
-        this.seconds = CTime.getCorrectSeconds(++this.seconds)
+    public prefixIncrement(): Time {
+        this.seconds = Time.getCorrectSeconds(++this.seconds)
         return this
     }
 
-    public postDecrement(): CTime {
-        const temporaryTime: CTime = new CTime(
-            CTime.hoursInTimestamp(this.seconds),
-            CTime.minutesInTimestamp(this.seconds),
-            CTime.secondsInTimestamp(this.seconds)
+    public postDecrement(): Time {
+        const temporaryTime: Time = new Time(
+            Time.hoursInTimestamp(this.seconds),
+            Time.minutesInTimestamp(this.seconds),
+            Time.secondsInTimestamp(this.seconds)
         )
-        this.seconds = CTime.getCorrectSeconds(--this.seconds)
+        this.seconds = Time.getCorrectSeconds(--this.seconds)
         return temporaryTime
     }
 
-    public prefixDecrement(): CTime {
-        this.seconds = CTime.getCorrectSeconds(--this.seconds)
+    public prefixDecrement(): Time {
+        this.seconds = Time.getCorrectSeconds(--this.seconds)
         return this
     }
 
-    public addWithAssignment(time: CTime): CTime {
-        const next = CTime.add(this, time)
+    public addWithAssignment(time: Time): Time {
+        const next = Time.add(this, time)
 
-        this.seconds = CTime.getCorrectSeconds(next.seconds)
+        this.seconds = Time.getCorrectSeconds(next.seconds)
         return this
     }
 
-    public subWithAssignment(time: CTime): CTime {
-        const temporarySeconds = CTime.sub(this, time)
-        this.seconds = CTime.getCorrectSeconds(temporarySeconds.seconds)
+    public subWithAssignment(time: Time): Time {
+        const temporarySeconds = Time.sub(this, time)
+        this.seconds = Time.getCorrectSeconds(temporarySeconds.seconds)
         return this
     }
 
-    public multiWithAssignment(coefficient: number): CTime {
+    public multiWithAssignment(coefficient: number): Time {
         if (!Number.isInteger(coefficient)) {
             console.log(MESSAGES.ERROR.NOT_INT)
         }
@@ -214,11 +214,11 @@ export class CTime {
         let temporarySeconds: number
         temporarySeconds = this.seconds * coefficient
 
-        this.seconds = CTime.getCorrectSeconds(temporarySeconds)
+        this.seconds = Time.getCorrectSeconds(temporarySeconds)
         return this
     }
 
-    public divWithAssignment(divisor: CTime | number): CTime {
+    public divWithAssignment(divisor: Time | number): Time {
         let temporarySeconds: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
@@ -235,7 +235,7 @@ export class CTime {
             }
             temporarySeconds = this.seconds / divisor.seconds
         }
-        this.seconds = Math.trunc(CTime.getCorrectSeconds(temporarySeconds))
+        this.seconds = Math.trunc(Time.getCorrectSeconds(temporarySeconds))
         return this
     }
 
@@ -259,20 +259,21 @@ export class CTime {
         return parseInt(line)
     }
 
-    public init(value: string): CTime {
+    public init(value: string): Time {
         const [h, m, s] = value.split(':')
-        this.seconds = new CTime(this.stringToNumber(h), this.stringToNumber(m), this.stringToNumber(s)).seconds
+        this.seconds = new Time(this.stringToNumber(h), this.stringToNumber(m), this.stringToNumber(s)).seconds
         return this
     }
 }
 
-const time = new CTime(23, 59, 59)
+const time = new Time(23, 59, 59)
 console.log(time.getHours())
 console.log(time.getMinutes())
 console.log(time.getSeconds())
 console.log(time.isValid())
 console.log(time.print())
 console.log(time.postIncrement())
+console.log(time.postDecrement())
 console.log(time.getHours())
 console.log(time.getMinutes())
 console.log(time.getSeconds())
