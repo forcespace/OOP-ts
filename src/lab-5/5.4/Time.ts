@@ -12,7 +12,7 @@ const MESSAGES = {
 
 export class Time {
     private seconds: number
-    private valid: boolean = true
+    private readonly valid: boolean = true
 
     // constructor(hours: number, minutes: number, seconds?: number);
     // constructor(timestamp: number);
@@ -284,9 +284,9 @@ console.log(time.getHours())
 console.log(time.getMinutes())
 console.log(time.getSeconds())
 console.log(time.isValid())
-console.log('префиксДекремент ', time.prefixDecrement())
+console.log(time.prefixDecrement())
 console.log(time.print())
-console.log('префиксИнкремент', time.prefixIncrement())
+console.log(time.prefixIncrement())
 console.log(time.print())
 console.log(time.init('12:00:00'))
 console.log(time.divWithAssignment(12))
