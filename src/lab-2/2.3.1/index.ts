@@ -46,7 +46,7 @@ export function getWordsCount(value: Array<string>): WordsCount {
 }
 
 export function arrayToString<T>(array: Array<T>, separator: string = ''): string {
-    console.log(array.join(separator))
+    //console.log(array.join(separator))
     return array.join(separator)
 }
 

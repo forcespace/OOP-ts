@@ -1,5 +1,3 @@
-import exp from 'constants'
-
 const SECONDS_IN_HOUR = 3600
 const SECONDS_IN_MINUTE = 60
 const SECONDS_IN_DAY = 86400
@@ -8,58 +6,57 @@ const HOURS_IN_DAY = 24
 const MESSAGES = {
     ERROR: {
         NOT_INT: 'Input must be integer',
-        BAD_VALUE: 'Must be > 0',
+        BAD_VALUE: 'Must be > 0'
     }
 }
 
-export class Time {
+export class Index {
     private seconds: number
     private valid: boolean = true
 
-    constructor(hours: number, minutes: number, seconds?: number);
-    constructor(timestamp: number);
+    // constructor(hours: number, minutes: number, seconds?: number);
+    // constructor(timestamp: number);
     constructor(hours: number, minutes?: number, seconds = 0) {
         if (minutes !== undefined) {
-            this.valid = Time.isValidParameters(hours, minutes, seconds)
-            this.seconds = Time.convertToTimestamp(hours, minutes, seconds)
+            this.valid = Index.isValidParameters(hours, minutes, seconds)
+            this.seconds = Index.convertToTimestamp(hours, minutes, seconds)
         } else {
             this.seconds = hours
         }
     }
 
-    public static convertTimestampToTime(timestamp: number): Time {
-        return new Time(
-            Time.hoursInTimestamp(timestamp),
-            Time.minutesInTimestamp(timestamp),
-            Time.secondsInTimestamp(timestamp)
+    public static convertTimestampToTime(timestamp: number): Index {
+        return new Index(
+            Index.hoursInTimestamp(timestamp),
+            Index.minutesInTimestamp(timestamp),
+            Index.secondsInTimestamp(timestamp)
         )
     }
 
-    public static add(time1: Time, time2: Time): Time {
-        const temporaryTimestamp: number = Time.getCorrectSeconds(time1.seconds + time2.seconds)
-        return Time.convertTimestampToTime(temporaryTimestamp)
+    public static add(time1: Index, time2: Index): Index {
+        const temporaryTimestamp: number = Index.getCorrectSeconds(time1.seconds + time2.seconds)
+        return Index.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static sub(subtrahend: Time, residual: Time): Time {
-        const temporaryTimestamp: number = Time.getCorrectSeconds(subtrahend.seconds - residual.seconds)
-        return Time.convertTimestampToTime(temporaryTimestamp)
+    public static sub(subtrahend: Index, residual: Index): Index {
+        const temporaryTimestamp: number = Index.getCorrectSeconds(subtrahend.seconds - residual.seconds)
+        return Index.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static multi(time: Time, coefficient: number): Time {
+    public static multi(time: Index, coefficient: number): Index {
         if (!Number.isInteger(coefficient)) {
             console.log(MESSAGES.ERROR.NOT_INT)
         }
 
-        const temporaryTimestamp: number = Time.getCorrectSeconds(time.seconds * coefficient)
-        return Time.convertTimestampToTime(temporaryTimestamp)
+        const temporaryTimestamp: number = Index.getCorrectSeconds(time.seconds * coefficient)
+        return Index.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static div(dividend: Time, divisor: Time | number): Time {
+    public static div(dividend: Index, divisor: Index | number): Index {
         let temporaryTimestamp: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
                 console.log(MESSAGES.ERROR.BAD_VALUE)
-
             }
 
             if (!Number.isInteger(divisor)) {
@@ -73,31 +70,31 @@ export class Time {
             }
             temporaryTimestamp = dividend.seconds / divisor.seconds
         }
-        temporaryTimestamp = Math.trunc(Time.getCorrectSeconds(temporaryTimestamp))
-        return Time.convertTimestampToTime(temporaryTimestamp)
+        temporaryTimestamp = Math.trunc(Index.getCorrectSeconds(temporaryTimestamp))
+        return Index.convertTimestampToTime(temporaryTimestamp)
     }
 
-    public static equal(time1: Time, time2: Time): boolean {
+    public static equal(time1: Index, time2: Index): boolean {
         return time1.seconds === time2.seconds
     }
 
-    public static notEqual(time1: Time, time2: Time): boolean {
+    public static notEqual(time1: Index, time2: Index): boolean {
         return time1.seconds !== time2.seconds
     }
 
-    public static isLarger(time1: Time, time2: Time): boolean {
+    public static isLarger(time1: Index, time2: Index): boolean {
         return time1.seconds > time2.seconds
     }
 
-    public static isNotLarger(time1: Time, time2: Time): boolean {
+    public static isNotLarger(time1: Index, time2: Index): boolean {
         return time1.seconds <= time2.seconds
     }
 
-    public static isLess(time1: Time, time2: Time): boolean {
+    public static isLess(time1: Index, time2: Index): boolean {
         return time1.seconds < time2.seconds
     }
 
-    public static isNotLess(time1: Time, time2: Time): boolean {
+    public static isNotLess(time1: Index, time2: Index): boolean {
         return time1.seconds >= time2.seconds
     }
 
@@ -111,18 +108,18 @@ export class Time {
     }
 
     private static minutesInTimestamp(timestamp: number): number {
-        const hours: number = Time.hoursInTimestamp(timestamp)
+        const hours: number = Index.hoursInTimestamp(timestamp)
         return Math.trunc((timestamp - hours * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE)
     }
 
     private static secondsInTimestamp(timestamp: number): number {
-        const hours: number = Time.hoursInTimestamp(timestamp)
-        const minutes: number = Time.minutesInTimestamp(timestamp)
+        const hours: number = Index.hoursInTimestamp(timestamp)
+        const minutes: number = Index.minutesInTimestamp(timestamp)
         return timestamp - hours * SECONDS_IN_HOUR - minutes * SECONDS_IN_MINUTE
     }
 
     private static isValidParameters(hours: number, minutes: number, seconds: number): boolean {
-        return Time.isValidHoursParameter(hours) && Time.isValidMinutesParameter(minutes) && Time.isValidSecondsParameter(seconds)
+        return Index.isValidHoursParameter(hours) && Index.isValidMinutesParameter(minutes) && Index.isValidSecondsParameter(seconds)
     }
 
     private static isValidHoursParameter(hours: number): boolean {
@@ -152,65 +149,65 @@ export class Time {
     }
 
     public getHours(): number {
-        return Time.hoursInTimestamp(this.seconds)
+        return Index.hoursInTimestamp(this.seconds)
     }
 
     public getMinutes(): number {
-        return Time.minutesInTimestamp(this.seconds)
+        return Index.minutesInTimestamp(this.seconds)
     }
 
     public getSeconds(): number {
-        return Time.secondsInTimestamp(this.seconds)
+        return Index.secondsInTimestamp(this.seconds)
     }
 
     public isValid(): boolean {
         return this.valid
     }
 
-    public postIncrement(): Time {
-        const temporaryTime: Time = new Time(
-            Time.hoursInTimestamp(this.seconds),
-            Time.minutesInTimestamp(this.seconds),
-            Time.secondsInTimestamp(this.seconds)
+    public postIncrement(): Index {
+        const temporaryTime: Index = new Index(
+            Index.hoursInTimestamp(this.seconds),
+            Index.minutesInTimestamp(this.seconds),
+            Index.secondsInTimestamp(this.seconds)
         )
-        this.seconds = Time.getCorrectSeconds(++this.seconds)
+        this.seconds = Index.getCorrectSeconds(++this.seconds)
         return temporaryTime
     }
 
-    public prefixIncrement(): Time {
-        this.seconds = Time.getCorrectSeconds(++this.seconds)
+    public prefixIncrement(): Index {
+        this.seconds = Index.getCorrectSeconds(++this.seconds)
         return this
     }
 
-    public postDecrement(): Time {
-        const temporaryTime: Time = new Time(
-            Time.hoursInTimestamp(this.seconds),
-            Time.minutesInTimestamp(this.seconds),
-            Time.secondsInTimestamp(this.seconds)
+    public postDecrement(): Index {
+        const temporaryTime: Index = new Index(
+            Index.hoursInTimestamp(this.seconds),
+            Index.minutesInTimestamp(this.seconds),
+            Index.secondsInTimestamp(this.seconds)
         )
-        this.seconds = Time.getCorrectSeconds(--this.seconds)
+        this.seconds = Index.getCorrectSeconds(--this.seconds)
         return temporaryTime
     }
 
-    public prefixDecrement(): Time {
-        this.seconds = Time.getCorrectSeconds(--this.seconds)
+    public prefixDecrement(): Index {
+        this.seconds = Index.getCorrectSeconds(--this.seconds)
         return this
     }
 
-    public addWithAssignment(time: Time): Time {
-        const next = Time.add(this, time)
+    public addWithAssignment(time: Index): Index {
+        const next = Index.add(this, time)
 
-        this.seconds = Time.getCorrectSeconds(next.seconds)
+        this.seconds = Index.getCorrectSeconds(next.seconds)
         return this
     }
 
-    public subWithAssignment(time: Time): Time {
-        const temporarySeconds = Time.sub(this, time)
-        this.seconds = Time.getCorrectSeconds(temporarySeconds.seconds)
+    public subWithAssignment(time: Index): Index {
+        const temporarySeconds = Index.sub(this, time)
+        this.seconds = Index.getCorrectSeconds(temporarySeconds.seconds)
         return this
     }
 
-    public multiWithAssignment(coefficient: number): Time {
+    public multiWithAssignment(coefficient: number): Index {
         if (!Number.isInteger(coefficient)) {
             console.log(MESSAGES.ERROR.NOT_INT)
         }
@@ -218,11 +215,11 @@ export class Time {
         let temporarySeconds: number
         temporarySeconds = this.seconds * coefficient
 
-        this.seconds = Time.getCorrectSeconds(temporarySeconds)
+        this.seconds = Index.getCorrectSeconds(temporarySeconds)
         return this
     }
 
-    public divWithAssignment(divisor: Time | number): Time {
+    public divWithAssignment(divisor: Index | number): Index {
         let temporarySeconds: number
         if (typeof divisor === 'number') {
             if (divisor === 0) {
@@ -239,7 +236,7 @@ export class Time {
             }
             temporarySeconds = this.seconds / divisor.seconds
         }
-        this.seconds = Math.trunc(Time.getCorrectSeconds(temporarySeconds))
+        this.seconds = Math.trunc(Index.getCorrectSeconds(temporarySeconds))
         return this
     }
 
@@ -263,30 +260,31 @@ export class Time {
         return parseInt(line)
     }
 
-    public init(value: string): Time {
+    public init(value: string): Index {
         const [h, m, s] = value.split(':')
-        this.seconds = new Time(this.stringToNumber(h), this.stringToNumber(m), this.stringToNumber(s)).seconds
+        this.seconds = new Index(this.stringToNumber(h), this.stringToNumber(m), this.stringToNumber(s)).seconds
         return this
     }
 }
 
-// const time = new Time(23, 59, 59)
-// const time2 = new Time(0, 0, 10)
-// console.log(time.getHours())
-// console.log(time.getMinutes())
-// console.log(time.getSeconds())
-// console.log(time.isValid())
-// console.log(time.print())
-// console.log(time.postIncrement())
-// console.log(time.getHours())
-// console.log(time.getMinutes())
-// console.log(time.getSeconds())
-// console.log(time.isValid())
-// console.log(time.print())
-// console.log(time.init('12:00:01'))
-// console.log(time.getHours())
-// console.log(time.getMinutes())
-// console.log(time.getSeconds())
-// console.log(time.isValid())
-// console.log(time.subWithAssignment(time2))
-// console.log(time.print())
+const time = new Index(23, 59, 59)
+console.log(time.getHours())
+console.log(time.getMinutes())
+console.log(time.getSeconds())
+console.log(time.isValid())
+console.log(time.print())
+console.log(time.postIncrement())
+console.log(time.getHours())
+console.log(time.getMinutes())
+console.log(time.getSeconds())
+console.log(time.isValid())
+console.log(time.print())
+console.log(time.init('12:00:01'))
+console.log(time.getHours())
+console.log(time.getMinutes())
+console.log(time.getSeconds())
+console.log(time.isValid())
+console.log('префиксДекремент ', time.prefixDecrement())
+console.log(time.print())
+console.log('префиксИнкремент', time.prefixIncrement())
+console.log(time.print())

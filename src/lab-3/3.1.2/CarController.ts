@@ -85,14 +85,14 @@ export class CarController {
         return this.parseGear(value) !== null
     }
 
-    private parseSpeed(value: string) {
+    private static parseSpeed(value: string) {
         const result = /^[\d]+(?:.\d+)?$/.exec(value)
 
         return result ? result[0] : null
     }
 
-    private isValidTargetSpeed(value: string) {
-        return this.parseSpeed(value) !== null
+    private static isValidTargetSpeed(value: string) {
+        return CarController.parseSpeed(value) !== null
     }
 
     private getCarInfo() {
@@ -177,8 +177,8 @@ gear: ${gear}`
             return MESSAGES.SPEED.ERROR.CAN_NOT_READ_TARGET_SPEED
         }
 
-        if (this.isValidTargetSpeed(value)) {
-            const targetSpeed = parseFloat(this.parseSpeed(value) as string)
+        if (CarController.isValidTargetSpeed(value)) {
+            const targetSpeed = parseFloat(CarController.parseSpeed(value) as string)
 
             if (!this.car.IsTurnedOn()) {
                 return MESSAGES.SPEED.ERROR.CAN_NOT_SET_BECAUSE_ENGINE_TURNED_OFF

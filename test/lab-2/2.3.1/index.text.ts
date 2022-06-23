@@ -12,6 +12,6 @@ describe('Counting the frequency of occurrence of words', () => {
     })
 
     it('The test should return string of array', () => {
-        expect(arrayToString(['any', 'text'], '')).eql({'anytext': 1})
+        expect(arrayToString(['any', 'text'], '')).eql('anytext')
     })
 })
