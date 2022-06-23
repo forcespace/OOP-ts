@@ -86,12 +86,16 @@ describe('Time', () => {
         expect(time).eql(multiWithAssignmentResult)
     })
 
-    it('23:59:58 / 0:0:2 = 11:58:59', () => {
-        time = new Index(23, 59, 58)
-        const divisor: Index = new Index(0, 0, 2)
-        const divWithAssignmentResult: Index = new Index(11, 59, 59)
-        expect(time.divWithAssignment(divisor)).eql(divWithAssignmentResult)
-        expect(time).eql(divWithAssignmentResult)
+    it('a === b', () => {
+        time = new Index(10, 0, 0)
+        const time2 = new Index(10, 0, 1)
+        expect(Index.equal(time, time2)).equal(false)
+    })
+
+    it('a !== b', () => {
+        time = new Index(10, 0, 0)
+        const time2 = new Index(10, 0, 1)
+        expect(Index.notEqual(time, time2)).equal(true)
     })
 
     it('a > b', () => {

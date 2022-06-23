@@ -16,7 +16,7 @@ export class Index {
 
     // constructor(hours: number, minutes: number, seconds?: number);
     // constructor(timestamp: number);
-    constructor(hours: number, minutes?: number, seconds = 0) {
+    constructor(hours: number, minutes: number, seconds = 0) {
         if (minutes !== undefined) {
             this.valid = Index.isValidParameters(hours, minutes, seconds)
             this.seconds = Index.convertToTimestamp(hours, minutes, seconds)
