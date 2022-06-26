@@ -14,15 +14,9 @@ export class Time {
     private seconds: number
     private readonly valid: boolean = true
 
-    // constructor(hours: number, minutes: number, seconds?: number);
-    // constructor(timestamp: number);
     constructor(hours: number, minutes: number, seconds = 0) {
-        if (minutes !== undefined) {
-            this.valid = Time.isValidParameters(hours, minutes, seconds)
-            this.seconds = Time.convertToTimestamp(hours, minutes, seconds)
-        } else {
-            this.seconds = hours
-        }
+        this.valid = Time.isValidParameters(hours, minutes, seconds)
+        this.seconds = Time.convertToTimestamp(hours, minutes, seconds)
     }
 
     public static convertTimestampToTime(timestamp: number): Time {
@@ -164,13 +158,8 @@ export class Time {
     }
 
     public postIncrement(): Time {
-        const temporaryTime: Time = new Time(
-            Time.hoursInTimestamp(this.seconds),
-            Time.minutesInTimestamp(this.seconds),
-            Time.secondsInTimestamp(this.seconds)
-        )
-        this.seconds = Time.getCorrectSeconds(++this.seconds)
-        return temporaryTime
+        this.seconds = Time.getCorrectSeconds(this.seconds++)
+        return this
     }
 
     public prefixIncrement(): Time {
@@ -179,13 +168,8 @@ export class Time {
     }
 
     public postDecrement(): Time {
-        const temporaryTime: Time = new Time(
-            Time.hoursInTimestamp(this.seconds),
-            Time.minutesInTimestamp(this.seconds),
-            Time.secondsInTimestamp(this.seconds)
-        )
-        this.seconds = Time.getCorrectSeconds(--this.seconds)
-        return temporaryTime
+        this.seconds = Time.getCorrectSeconds(this.seconds--)
+        return this
     }
 
     public prefixDecrement(): Time {
