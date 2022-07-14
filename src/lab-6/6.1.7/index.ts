@@ -4,7 +4,7 @@ import {HttpUrl} from './HttpUrl'
 import {UrlParsingError} from './UrlParsingError'
 
 const MESSAGE_WELCOME_INPUT = 'For "exit" enter exit.\n' +
-    'Pls enter URL for parsing:'
+                              'Pls enter URL for parsing:'
 const STOP_PROGRAM = 'exit'
 
 function printMessage(error: string) {
@@ -12,11 +12,13 @@ function printMessage(error: string) {
 }
 
 function printParsingURL(httpUrl: HttpUrl) {
-    console.log(`Protocol: ${httpUrl.getProtocol()}`)
-    console.log(`Document: ${httpUrl.getDocument()}`)
-    console.log(`URL: ${httpUrl.getUrl()}`)
-    console.log(`Domain: ${httpUrl.getDomain()}`)
-    console.log(`Port: ${httpUrl.getPort()}`)
+    console.log(
+        `Protocol: ${httpUrl.getProtocol()}\n` +
+        `Document: ${httpUrl.getDocument()}\n` +
+        `URL: ${httpUrl.getUrl()}\n` +
+        `Domain: ${httpUrl.getDomain()}\n` +
+        `Port: ${httpUrl.getPort()}`
+    )
 }
 
 function main(): void {
