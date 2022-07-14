@@ -42,9 +42,7 @@ export class HttpUrl {
         if (!HttpUrl.isCorrectUrlCharacter(url)) {
             throw new UrlParsingError(MESSAGES.URL.ERROR)
         }
-
         const urlMap: Map<string, string> = HttpUrl.getUrlMap(url)
-
         this.protocol = HttpUrl.convertStringToProtocol(urlMap.get('protocol'))
         this.domain = HttpUrl.getCorrectDomain(urlMap.get('domain'))
         this.port = this.getCorrectPort(urlMap.get('port'))
@@ -64,9 +62,7 @@ export class HttpUrl {
     private static getUrlMap(url: string): Map<string, string> {
         const urlMap: Map<string, string> = new Map()
         const extractedProtocol: string[] = url.split('://', 2)
-
         urlMap.set('protocol', extractedProtocol[0])
-
         const extractedDomainAndPort: string[] = extractedProtocol[1].split('/', 2)
         const extractedDomain: string[] = extractedDomainAndPort[0].split(':', 2)
         urlMap.set('domain', extractedDomain[0])
@@ -143,6 +139,7 @@ export class HttpUrl {
 
     public getUrl(): string {
         let portAsString = ''
+        const separator = '://'
         if (this.protocol === Protocol.HTTP && this.port !== PORT.INIT.HTTP_DEFAULT) {
             portAsString = `:${this.port}`
         }
@@ -150,7 +147,7 @@ export class HttpUrl {
         if (this.protocol === Protocol.HTTPS && this.port !== PORT.INIT.HTTPS_DEFAULT) {
             portAsString = `:${this.port}`
         }
-        return `${this.protocol}://${this.domain}${portAsString}${this.document}`
+        return `${this.protocol}${separator}${this.domain}${portAsString}${this.document}`
     }
 
     private getDefaultPort(): number {
