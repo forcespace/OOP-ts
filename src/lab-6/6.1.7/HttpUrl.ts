@@ -61,13 +61,21 @@ export class HttpUrl {
 
     private static getUrlMap(url: string): Map<string, string> {
         const urlMap: Map<string, string> = new Map()
+        const protocolRegexp = /^(\D+):\/\//;
+        if (!protocolRegexp.test(url))
+        {
+            throw new UrlParsingError(MESSAGES.PROTOCOL.ERROR)
+        }
         const extractedProtocol: string[] = url.split('://', 2)
         urlMap.set('protocol', extractedProtocol[0])
-        const extractedDomainAndPort: string[] = extractedProtocol[1].split('/', 2)
+        const extractedDomainAndPort: string[] = extractedProtocol[1].split('/')
         const extractedDomain: string[] = extractedDomainAndPort[0].split(':', 2)
         urlMap.set('domain', extractedDomain[0])
         urlMap.set('port', extractedDomain[1])
-        urlMap.set('document', extractedDomainAndPort[1])
+        const extractedDocument = extractedDomainAndPort
+        extractedDocument.shift()
+        const document = extractedDocument.join('/')
+        urlMap.set('document', document)
 
         return urlMap
     }
