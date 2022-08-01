@@ -2,7 +2,7 @@ import {SolidShape} from './SolidShape'
 import {Point} from './Point'
 import {CustomCanvas} from './CustomCanvas'
 
-class Triangle implements SolidShape{
+export class Triangle implements SolidShape{
     private readonly vertex1: Point
     private readonly vertex2: Point
     private readonly vertex3: Point
@@ -59,8 +59,4 @@ class Triangle implements SolidShape{
             `outline color: ${this.outlineColor}\n` +
             `fill color: ${this.fillColor}`
     }
-}
-
-export {
-    Triangle,
 }

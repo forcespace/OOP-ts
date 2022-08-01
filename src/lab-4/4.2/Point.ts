@@ -1,4 +1,4 @@
-class Point {
+export class Point {
     public x: number
     public y: number
 
@@ -6,8 +6,4 @@ class Point {
         this.x = x
         this.y = y
     }
-}
-
-export {
-    Point,
 }

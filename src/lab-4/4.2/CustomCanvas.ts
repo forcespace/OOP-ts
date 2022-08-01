@@ -1,10 +1,8 @@
-import {createCanvas, Canvas, CanvasRenderingContext2D} from 'canvas'
+import {Canvas, CanvasRenderingContext2D, createCanvas} from 'canvas'
 import {CanvasInterface} from './CanvasInterface'
 import {Point} from './Point'
 
-const fs = require('fs')
-
-class CustomCanvas implements CanvasInterface {
+export class CustomCanvas implements CanvasInterface {
     private width = 1200
     private height = 600
     private lineWidth = 2
@@ -18,9 +16,8 @@ class CustomCanvas implements CanvasInterface {
     }
 
     public drawCircle(center: Point, radius: number): void {
-        /*возможно не нужно beginPath()*/
         this.context.beginPath()
-        this.context.arc(center.x, center.y, radius,0,Math.PI * 2)
+        this.context.arc(center.x, center.y, radius, 0, Math.PI * 2)
         this.context.fill()
         this.context.stroke()
     }
@@ -58,13 +55,4 @@ class CustomCanvas implements CanvasInterface {
     public setStrokeColor(outlineColor: string): void {
         this.context.strokeStyle = `#${outlineColor}`
     }
-
-    public save(filePath: string) {
-        const buffer = this.canvas.toBuffer('image/png')
-        fs.writeFileSync(filePath, buffer)
-    }
-}
-
-export {
-    CustomCanvas,
 }

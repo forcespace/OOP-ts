@@ -8,7 +8,11 @@ class LineSegment implements Shape {
     private readonly endPoint: Point
     private readonly outlineColor: string
 
-    constructor(startPoint: Point, endPoint: Point, outlineColor: string) {
+    constructor(
+        startPoint: Point,
+        endPoint: Point,
+        outlineColor: string
+    ) {
         this.startPoint = startPoint
         this.endPoint = endPoint
         this.outlineColor = outlineColor

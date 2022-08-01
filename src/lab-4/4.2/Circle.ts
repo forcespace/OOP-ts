@@ -1,15 +1,19 @@
 import {SolidShape} from './SolidShape'
 import {Point} from './Point'
-import {CustomCanvas} from './CustomCanvas'
 import {CanvasInterface} from './CanvasInterface'
 
-class Circle implements SolidShape {
+export class Circle implements SolidShape {
     private readonly center: Point
     private readonly radius: number
     private readonly fillColor: string
     private readonly outlineColor: string
 
-    constructor(center: Point, radius: number, outlineColor: string, fillColor: string = '000000') {
+    constructor(
+        center: Point,
+        radius: number,
+        outlineColor: string,
+        fillColor: string = '000000'
+    ) {
         this.center = center
         this.radius = radius
         this.fillColor = fillColor
@@ -47,8 +51,4 @@ class Circle implements SolidShape {
         canvas.setFillColor(this.fillColor)
         canvas.drawCircle(this.center, this.radius)
     }
-}
-
-export {
-    Circle,
 }

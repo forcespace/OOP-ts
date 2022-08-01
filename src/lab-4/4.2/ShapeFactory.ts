@@ -8,8 +8,7 @@ import {ShapeNamesTypes} from './ShapeHandler'
 
 const ERROR_WRONG_TYPE = 'Wrong shape type'
 
-class ShapeFactory {
-    //factory - СОЗдание фигур
+export class ShapeFactory {
     public static createShape(line: string): Shape {
         const lineArray: string[] = line.split(' ')
         switch (lineArray[0]) {
@@ -76,8 +75,4 @@ class ShapeFactory {
         const outlineColor: string = lineArray[5]
         return new LineSegment(startPoint, endPoint, outlineColor)
     }
-}
-
-export {
-    ShapeFactory,
 }

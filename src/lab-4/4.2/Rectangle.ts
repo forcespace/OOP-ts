@@ -2,7 +2,7 @@ import {Point} from './Point'
 import {SolidShape} from './SolidShape'
 import {CustomCanvas} from './CustomCanvas'
 
-class Rectangle implements SolidShape {
+export class Rectangle implements SolidShape {
     private readonly leftTop: Point
     private readonly rightBottom: Point
     private readonly height: number
@@ -58,13 +58,8 @@ class Rectangle implements SolidShape {
     }
 
     public draw(canvas: CustomCanvas): void {
-        /*разделить установку цвета и отрисовку*/
         canvas.setStrokeColor(this.outlineColor)
         canvas.setFillColor(this.fillColor)
         canvas.drawRectangle(this.leftTop, this.width, this.height)
     }
-}
-
-export {
-    Rectangle,
 }
